@@ -11,11 +11,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@Document(collection = "commune")
 @Data
+@Document(collection = "localisation")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Commune implements Serializable {
+public class Localisation implements Serializable {
 
     @Id
     private Long id;
@@ -23,7 +23,8 @@ public class Commune implements Serializable {
     private String name;
     private String code;
     private int superficie;
+    private Location location;
 
     @DocumentReference
-    private List<Quartier> quartiers = new ArrayList<>();
+    private List<Habitat> habitats = new ArrayList<>();
 }
