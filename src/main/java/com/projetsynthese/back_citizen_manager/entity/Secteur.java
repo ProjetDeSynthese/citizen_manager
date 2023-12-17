@@ -3,31 +3,29 @@ package com.projetsynthese.back_citizen_manager.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.bson.types.ObjectId;
+import lombok.NonNull;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.io.Serializable;
 
-@Document(collection = "user")
+@Document(collection = "secteur")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class User implements Serializable {
+public class Secteur implements Serializable {
 
     @Id
     private String id;
 
-    private String name;
-    private String prenom;
+    @NonNull
     @Indexed(unique = true)
-    private String email;
-    private String numero;
-    private String login;
-    private String password;
-    private Role role;
-    private Boolean active = true;
+    private String name;
+    private String code;
+    private float superficie;
 
+    @DBRef
+    private Quartier quartier;
 }

@@ -3,28 +3,29 @@ package com.projetsynthese.back_citizen_manager.entity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.DocumentReference;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
+@Document(collection = "commune")
 @Data
-@Document(collection = "localisation")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Localisation implements Serializable {
+public class Commune implements Serializable {
 
     @Id
-    private Long id;
+    private String id;
 
+    @NonNull
+    @Indexed(unique = true)
     private String name;
     private String code;
-    private int superficie;
-    private Location location;
+    private float superficie;
 
-    @DocumentReference
-    private List<Habitat> habitats = new ArrayList<>();
+    @DBRef
+    private Ville ville;
 }
