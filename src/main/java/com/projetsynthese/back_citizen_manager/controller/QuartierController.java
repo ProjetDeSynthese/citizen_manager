@@ -17,13 +17,13 @@ public class QuartierController {
     @Autowired
     private QuartierRepo quartierRepo;
     @Autowired
-    private DepartementRepo departementRepo;
+    private DepartementRepository departementRepo;
     @Autowired
-    private VilleRepo villeRepo;
+    private VilleRepository villeRepo;
     @Autowired
-    private RegionRepo regionRepo;
+    private RegionRepository regionRepo;
     @Autowired
-    private CommuneRepo communeRepo;
+    private CommuneRepository communeRepo;
 
     @PostMapping("/addQuartier")
     public ResponseEntity<Quartier> saveQuartier(@RequestBody Quartier quartier){

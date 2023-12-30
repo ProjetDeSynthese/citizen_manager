@@ -18,14 +18,13 @@ import java.io.Serializable;
 public class Ville implements Serializable {
 
     @Id
-    private String id;
+    public String id;
 
     @NonNull
     @Indexed(unique = true)
-    private String name;
-    private String code;
-    private float superficie;
+    public String name;
+    public String code;
 
     @DBRef
-    private Departement departement;
+    public Departement departement;
 }

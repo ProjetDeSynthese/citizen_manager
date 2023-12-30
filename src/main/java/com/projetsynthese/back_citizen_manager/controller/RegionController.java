@@ -1,36 +1,59 @@
 package com.projetsynthese.back_citizen_manager.controller;
 
+import com.projetsynthese.back_citizen_manager.DTO.RegionDTO;
 import com.projetsynthese.back_citizen_manager.entity.Region;
-import com.projetsynthese.back_citizen_manager.repository.RegionRepo;
+import com.projetsynthese.back_citizen_manager.exeption.message.Message;
+import com.projetsynthese.back_citizen_manager.repository.RegionRepository;
+import com.projetsynthese.back_citizen_manager.services.RegionService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/api/region/")
 public class RegionController {
 
     @Autowired
-    private RegionRepo regionRepo;
+    private ModelMapper modelMapper;
 
-    @PostMapping("/addRegion")
-    public ResponseEntity<Region> saveRegion(@RequestBody Region region){
+    @Autowired
+    private RegionService regionService;
 
+    @PostMapping()
+    public ResponseEntity<Message> saveRegion(@RequestBody Region region){
         if (region == null){
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            Message message = Message.builder()
+                    .code(500).message("Entity is required")
+                    .build();
+            return new ResponseEntity<>(message, HttpStatus.FORBIDDEN);
         }
-        return new ResponseEntity<>(regionRepo.save(region), HttpStatus.OK);
+        this.regionService.create(region);
+        Message message = Message.builder()
+                .code(201).message("Record Successfully")
+                .build();
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+    @GetMapping()
+    public ResponseEntity<List<RegionDTO>> findAll(){
+        return new ResponseEntity<>( this.regionService.findAll()
+                .stream()
+                .map(region -> modelMapper.map(region,RegionDTO.class))
+                .collect(Collectors.toList()),HttpStatus.OK );
+
+    }
+    @GetMapping("{code}")
+    public ResponseEntity<RegionDTO> findById(@PathVariable String code){
+        return new ResponseEntity<>(
+                modelMapper.map(this.regionService.findByCode(code),RegionDTO.class),
+                HttpStatus.OK);
     }
 
-//    Liste de toutes les regions
-    @GetMapping("/findAllRegion")
-    public List<Region> getAllRegion(){
-        return regionRepo.findAll();
-    }
-
-    @PutMapping("/updateRegion/{id}")
+    /*@PutMapping("/updateRegion/{id}")
     public ResponseEntity<Region> editRegion(@PathVariable("id") String id, @RequestBody Region region){
 
         Region reg = regionRepo.findById(id).orElse(null);
@@ -48,5 +71,5 @@ public class RegionController {
     public String deleteRegion(@PathVariable("id") String id){
         regionRepo.deleteById(id);
         return "Deleted with Successfully from database";
-    }
+    }*/
 }

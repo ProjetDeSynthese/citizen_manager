@@ -17,17 +17,17 @@ public class CitoyenController {
     @Autowired
     private CitoyenRepo citoyenRepo;
     @Autowired
-    private RegionRepo regionRepo;
+    private RegionRepository regionRepo;
     @Autowired
     private SecteurRepo secteurRepo;
     @Autowired
-    private DepartementRepo departementRepo;
+    private DepartementRepository departementRepo;
     @Autowired
-    private VilleRepo villeRepo;
+    private VilleRepository villeRepo;
     @Autowired
     private QuartierRepo quartierRepo;
     @Autowired
-    private CommuneRepo communeRepo;
+    private CommuneRepository communeRepo;
     @Autowired
     private HabitatRepo habitatRepo;
 

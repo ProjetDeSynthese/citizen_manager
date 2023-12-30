@@ -17,12 +17,11 @@ import java.io.Serializable;
 public class Region implements Serializable {
 
     @Id
-    private String id;
+    public String id;
 
     @NonNull
     @Indexed(unique = true)
-    private String name;
-    private String code;
-    private float superficie;
+    public String name;
+    public String code;
 
 }

@@ -1,13 +1,19 @@
 package com.projetsynthese.back_citizen_manager.controller;
 
+import com.projetsynthese.back_citizen_manager.DTO.CommuneDTO;
+import com.projetsynthese.back_citizen_manager.DTO.DepartementDTO;
 import com.projetsynthese.back_citizen_manager.entity.Commune;
 import com.projetsynthese.back_citizen_manager.entity.Departement;
 import com.projetsynthese.back_citizen_manager.entity.Region;
 import com.projetsynthese.back_citizen_manager.entity.Ville;
-import com.projetsynthese.back_citizen_manager.repository.CommuneRepo;
-import com.projetsynthese.back_citizen_manager.repository.DepartementRepo;
-import com.projetsynthese.back_citizen_manager.repository.RegionRepo;
-import com.projetsynthese.back_citizen_manager.repository.VilleRepo;
+import com.projetsynthese.back_citizen_manager.exeption.message.Message;
+import com.projetsynthese.back_citizen_manager.repository.CommuneRepository;
+import com.projetsynthese.back_citizen_manager.repository.DepartementRepository;
+import com.projetsynthese.back_citizen_manager.repository.RegionRepository;
+import com.projetsynthese.back_citizen_manager.repository.VilleRepository;
+import com.projetsynthese.back_citizen_manager.services.CommuneService;
+import com.projetsynthese.back_citizen_manager.services.DepartementService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,112 +22,43 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/api/commune/")
 public class CommuneController {
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Autowired
-    private CommuneRepo communeRepo;
-    @Autowired
-    private VilleRepo villeRepo;
-    @Autowired
-    private DepartementRepo departementRepo;
-    @Autowired
-    private RegionRepo regionRepo;
+    private CommuneService communeService;
 
-    @PostMapping("/addCommune")
-    public ResponseEntity<Commune> saveCommune(@RequestBody Commune commune){
-
+    @PostMapping()
+    public ResponseEntity<Message> save(@RequestBody Commune commune){
         if (commune == null){
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            Message message = Message.builder()
+                    .code(500).message("Entity is required")
+                    .build();
+            return new ResponseEntity<>(message, HttpStatus.FORBIDDEN);
         }
-        return new ResponseEntity<>(communeRepo.save(commune), HttpStatus.OK);
+        this.communeService.create(commune);
+        Message message = Message.builder()
+                .code(201).message("Record Successfully")
+                .build();
+        return new ResponseEntity<>(message, HttpStatus.OK);
     }
+    @GetMapping()
+    public ResponseEntity<List<CommuneDTO>> findAll(){
+        return new ResponseEntity<>( this.communeService.findAll()
+                .stream()
+                .map(commune -> modelMapper.map(commune,CommuneDTO.class))
+                .collect(Collectors.toList()),HttpStatus.OK );
 
-//    Liste des communes d'une ville
-    @GetMapping("/findAllCommuneByVille")
-    public ResponseEntity<List<Commune>> getAllCommuneByVille(@RequestParam String nameVille){
-
-        List<Commune> communes = new ArrayList<>();
-        Optional<Ville> ville = villeRepo.findByName(nameVille);
-        if (!ville.isPresent()){
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
-        for (Commune commune : communeRepo.findAll()){
-            if (commune.getVille().getName().equals(ville.get().getName())){
-                communes.add(commune);
-            }
-        }
-        return new ResponseEntity<>(communes, HttpStatus.OK);
     }
-
-//    Liste des communes d'un departement
-    @GetMapping("/findAllCommuneByDepartement")
-    public ResponseEntity<List<Commune>> getAllCommuneByDepartement(@RequestParam String nameDepart){
-
-        List<Commune> communes = new ArrayList<>();
-        Optional<Departement> departement = departementRepo.findByName(nameDepart);
-        if (!departement.isPresent()){
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
-        for (Commune commune : communeRepo.findAll()){
-            Ville ville = villeRepo.findByName(commune.getVille().getName()).get();
-            Departement depart = departementRepo.findByName(ville.getDepartement().getName()).get();
-            if (depart.getName().equals(departement.get().getName())){
-                communes.add(commune);
-            }
-        }
-        return new ResponseEntity<>(communes, HttpStatus.OK);
-    }
-
-//    Liste des communes d'une region
-    @GetMapping("/findAllCommuneByRegion")
-    public ResponseEntity<List<Commune>> getAllCommuneByRegion(@RequestParam String nameRegion){
-
-        List<Commune> communes = new ArrayList<>();
-        Optional<Region> region = regionRepo.findByName(nameRegion);
-        if (!region.isPresent()){
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
-        for (Commune commune : communeRepo.findAll()){
-            Ville ville = villeRepo.findByName(commune.getVille().getName()).get();
-            Departement depart = departementRepo.findByName(ville.getDepartement().getName()).get();
-            Region reg = regionRepo.findByName(depart.getRegion().getName()).get();
-            if (reg.getName().equals(region.get().getName())){
-                communes.add(commune);
-            }
-        }
-        return new ResponseEntity<>(communes, HttpStatus.OK);
-    }
-
-    @GetMapping("/findCommuneById/{id}")
-    public ResponseEntity<Commune> getCommuneById(@PathVariable("id") String id){
-
-        Commune commune = communeRepo.findById(id).orElse(null);
-        if (commune == null){
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
-        return new ResponseEntity<>(commune, HttpStatus.OK);
-    }
-
-    @PutMapping("/updateCommune/{id}")
-    public ResponseEntity<Commune> editCommune(@PathVariable("id") String id, @RequestBody Commune commune){
-
-        Commune communeFromDB = communeRepo.findById(id).orElse(null);
-        if (communeFromDB == null){
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-        }
-        communeFromDB.setName(commune.getName());
-        communeFromDB.setSuperficie(commune.getSuperficie());
-        communeFromDB.setCode(commune.getCode());
-
-        Commune updateCommune = communeRepo.save(communeFromDB);
-        return new ResponseEntity<>(updateCommune, HttpStatus.OK);
-    }
-
-    @DeleteMapping("/dropCommune/{id}")
-    public String deleteCommune(@PathVariable("id") String id){
-        communeRepo.deleteById(id);
-        return "Deleted with Successfully from database";
+    @GetMapping("{code}")
+    public ResponseEntity<CommuneDTO> findById(@PathVariable String code){
+        return new ResponseEntity<>(
+                modelMapper.map(this.communeService.findByCode(code),CommuneDTO.class),
+                HttpStatus.OK);
     }
 }
