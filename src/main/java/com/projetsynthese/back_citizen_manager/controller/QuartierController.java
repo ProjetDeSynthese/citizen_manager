@@ -4,8 +4,6 @@ import com.projetsynthese.back_citizen_manager.DTO.HabitatDTO;
 import com.projetsynthese.back_citizen_manager.DTO.QuartierDTO;
 import com.projetsynthese.back_citizen_manager.entity.*;
 import com.projetsynthese.back_citizen_manager.exeption.message.Message;
-import com.projetsynthese.back_citizen_manager.repository.*;
-import com.projetsynthese.back_citizen_manager.services.HabitatService;
 import com.projetsynthese.back_citizen_manager.services.QuartierService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController

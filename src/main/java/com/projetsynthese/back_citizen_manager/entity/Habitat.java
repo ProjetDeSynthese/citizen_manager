@@ -22,15 +22,11 @@ public class Habitat implements Serializable {
     @Id
     public String id;
 
-    public String adresse;
-    public float superficie;
-    public int nombreChambre;
+    public String description;
     public String proprietaire;
-    public int anneeConstruct;
-    public int etage;
-    public int parking;
-    public boolean libre = false;
-
+    public Double latitude;
+    public Double longitude;
+    public List<String> images;
     @DBRef
     public Secteur secteur;
 

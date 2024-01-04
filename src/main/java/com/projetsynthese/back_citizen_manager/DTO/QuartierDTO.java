@@ -1,15 +1,18 @@
 package com.projetsynthese.back_citizen_manager.DTO;
 
 import com.projetsynthese.back_citizen_manager.entity.Commune;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
-
+@Data
+@NoArgsConstructor
 public class QuartierDTO {
-    private String id;
+    public String id;
 
-    private String name;
-    private String code;
+    public String name;
+    public String code;
 
-    private Commune commune;
+    public Commune commune;
 }
