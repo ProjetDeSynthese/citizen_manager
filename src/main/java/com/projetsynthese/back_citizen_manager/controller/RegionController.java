@@ -53,6 +53,12 @@ public class RegionController {
                 modelMapper.map(this.regionService.findById(id),RegionDTO.class),
                 HttpStatus.OK);
     }
+    @GetMapping("findByCode/{code}")
+    public ResponseEntity<RegionDTO> findByCode(@PathVariable String code){
+        return new ResponseEntity<>(
+                modelMapper.map(this.regionService.findByCode(code),RegionDTO.class),
+                HttpStatus.OK);
+    }
     @DeleteMapping("{id}")
     public ResponseEntity<Message>  deleteById(@PathVariable String id){
         try{

@@ -51,10 +51,16 @@ public class HabitatController {
                 .collect(Collectors.toList()),HttpStatus.OK );
 
     }
-    @GetMapping("{address}")
-    public ResponseEntity<HabitatDTO> findById(@PathVariable String addresse){
+    @GetMapping("{id}")
+    public ResponseEntity<HabitatDTO> findById(@PathVariable String id){
         return new ResponseEntity<>(
-                modelMapper.map(this.habitatService.findByAddress(addresse),HabitatDTO.class),
+                modelMapper.map(this.habitatService.findById(id),HabitatDTO.class),
+                HttpStatus.OK);
+    }
+    @GetMapping("findByAddress/{address}")
+    public ResponseEntity<HabitatDTO> findByAddress(@PathVariable String address){
+        return new ResponseEntity<>(
+                modelMapper.map(this.habitatService.findByAddress(address),HabitatDTO.class),
                 HttpStatus.OK);
     }
     @DeleteMapping("{id}")

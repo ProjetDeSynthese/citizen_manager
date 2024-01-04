@@ -50,7 +50,7 @@ public class CitoyenController {
                 .collect(Collectors.toList()),HttpStatus.OK );
 
     }
-    @GetMapping("{code}")
+    @GetMapping("findByCni/{cni}")
     public ResponseEntity<CitoyenDTO> findByCni(@PathVariable String cni){
         return new ResponseEntity<>(
                 modelMapper.map(this.citoyenService.findByCni(cni),CitoyenDTO.class),

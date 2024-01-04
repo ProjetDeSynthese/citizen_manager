@@ -53,6 +53,12 @@ public class DepartementController {
                 modelMapper.map(this.departementService.findById(id),DepartementDTO.class),
                 HttpStatus.OK);
     }
+    @GetMapping("findByCode/{code}")
+    public ResponseEntity<DepartementDTO> findByCode(@PathVariable String code){
+        return new ResponseEntity<>(
+                modelMapper.map(this.departementService.findByCode(code),DepartementDTO.class),
+                HttpStatus.OK);
+    }
     @DeleteMapping("{id}")
     public ResponseEntity<Message>  deleteById(@PathVariable String id){
         try{

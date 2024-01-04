@@ -62,6 +62,12 @@ public class CommuneController {
                 modelMapper.map(this.communeService.findById(id),CommuneDTO.class),
                 HttpStatus.OK);
     }
+    @GetMapping("findByCode/{code}")
+    public ResponseEntity<CommuneDTO> findByCode(@PathVariable String code){
+        return new ResponseEntity<>(
+                modelMapper.map(this.communeService.findByCode(code),CommuneDTO.class),
+                HttpStatus.OK);
+    }
     @DeleteMapping("{id}")
     public ResponseEntity<Message>  deleteById(@PathVariable String id){
         try{

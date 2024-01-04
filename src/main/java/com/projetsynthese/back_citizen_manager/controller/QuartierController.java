@@ -54,9 +54,17 @@ public class QuartierController {
     @GetMapping("{id}")
     public ResponseEntity<QuartierDTO> findById(@PathVariable String id){
         return new ResponseEntity<>(
-                modelMapper.map(this.quartierService.findByCode(id),QuartierDTO.class),
+                modelMapper.map(this.quartierService.findById(id),QuartierDTO.class),
                 HttpStatus.OK);
     }
+    @GetMapping("findByCode/{code}")
+    public ResponseEntity<QuartierDTO> findByCode(@PathVariable String code){
+        return new ResponseEntity<>(
+                modelMapper.map(this.quartierService.findByCode(code),QuartierDTO.class),
+                HttpStatus.OK);
+    }
+
+
     @DeleteMapping("{id}")
     public ResponseEntity<Message>  deleteById(@PathVariable String id){
         try{

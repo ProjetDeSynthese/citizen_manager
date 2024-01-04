@@ -51,6 +51,13 @@ public class VilleController {
                 modelMapper.map(this.villeService.findById(id),VilleDTO.class),
                 HttpStatus.OK);
     }
+    @GetMapping("findByCode/{code}")
+    public ResponseEntity<VilleDTO> findByCode(@PathVariable String code){
+        return new ResponseEntity<>(
+                modelMapper.map(this.villeService.findByCode(code),VilleDTO.class),
+                HttpStatus.OK);
+    }
+
     @DeleteMapping("{id}")
     public ResponseEntity<Message>  deleteById(@PathVariable String id){
         try{
