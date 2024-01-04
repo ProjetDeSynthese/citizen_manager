@@ -26,6 +26,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/commune/")
+@CrossOrigin(origins = "*")
 public class CommuneController {
     @Autowired
     private ModelMapper modelMapper;

@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;
 
-public interface DepartementRepository extends MongoRepository<Departement, Long> {
+public interface DepartementRepository extends MongoRepository<Departement, String> {
     public Optional<Departement> findByName(String name);
 
     Optional<Departement> findByCode(String code);

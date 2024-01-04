@@ -1,5 +1,6 @@
 package com.projetsynthese.back_citizen_manager.services;
 
+import com.projetsynthese.back_citizen_manager.entity.Citoyen;
 import com.projetsynthese.back_citizen_manager.entity.Region;
 import com.projetsynthese.back_citizen_manager.exeption.EntityNotFoundException;
 import com.projetsynthese.back_citizen_manager.repository.RegionRepository;
@@ -33,9 +34,12 @@ public class RegionServiceImpl implements  RegionService{
         return optionalRegion.orElseThrow(()->new EntityNotFoundException());
 
     }
+    public Region findById(String id) {
+        Optional<Region> optionalRegion = regionRepository.findById(id);
+        return optionalRegion.orElseThrow(()->new EntityNotFoundException());
+    }
 
-    public void deleteByCode(String code){
-        Optional<Region> regionOptional = Optional.ofNullable(findByCode(code));
-       // regionRepository.delete(regionOptional);
+    public void deleteById(String id){
+        regionRepository.deleteById(id);
     }
 }

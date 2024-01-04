@@ -1,7 +1,13 @@
 package com.projetsynthese.back_citizen_manager.controller;
 
+import com.projetsynthese.back_citizen_manager.DTO.CitoyenDTO;
+import com.projetsynthese.back_citizen_manager.DTO.DepartementDTO;
 import com.projetsynthese.back_citizen_manager.entity.*;
+import com.projetsynthese.back_citizen_manager.exeption.message.Message;
 import com.projetsynthese.back_citizen_manager.repository.*;
+import com.projetsynthese.back_citizen_manager.services.CitoyenService;
+import com.projetsynthese.back_citizen_manager.services.DepartementService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,26 +16,63 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/api/citoyen/")
+@CrossOrigin(origins = "*")
 public class CitoyenController {
+    @Autowired
+    private ModelMapper modelMapper;
 
     @Autowired
-    private CitoyenRepo citoyenRepo;
+    private CitoyenService citoyenService;
+
+    @PostMapping()
+    public ResponseEntity<Message> save(@RequestBody Citoyen citoyen){
+        if (citoyen == null){
+            Message message = Message.builder()
+                    .code(500).message("Entity is required")
+                    .build();
+            return new ResponseEntity<>(message, HttpStatus.FORBIDDEN);
+        }
+        this.citoyenService.create(citoyen);
+        Message message = Message.builder()
+                .code(201).message("Record Successfully")
+                .build();
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+    @GetMapping()
+    public ResponseEntity<List<CitoyenDTO>> findAll(){
+        return new ResponseEntity<>( this.citoyenService.findAll()
+                .stream()
+                .map(citoyen -> modelMapper.map(citoyen,CitoyenDTO.class))
+                .collect(Collectors.toList()),HttpStatus.OK );
+
+    }
+    @GetMapping("{code}")
+    public ResponseEntity<CitoyenDTO> findByCni(@PathVariable String cni){
+        return new ResponseEntity<>(
+                modelMapper.map(this.citoyenService.findByCni(cni),CitoyenDTO.class),
+                HttpStatus.OK);
+    }
+
+   /* @Autowired
+    private CitoyenRepository citoyenRepo;
     @Autowired
     private RegionRepository regionRepo;
     @Autowired
-    private SecteurRepo secteurRepo;
+    private SecteurRepository secteurRepo;
     @Autowired
     private DepartementRepository departementRepo;
     @Autowired
     private VilleRepository villeRepo;
     @Autowired
-    private QuartierRepo quartierRepo;
+    private QuartierRepository quartierRepo;
     @Autowired
     private CommuneRepository communeRepo;
     @Autowired
-    private HabitatRepo habitatRepo;
+    private HabitatRepository habitatRepo;
 
     //Ajouter un citoyen
     @PostMapping("/addCitoyen")
@@ -232,4 +275,6 @@ public class CitoyenController {
         citoyenRepo.deleteById(id);
         return "Deleted with Successfully from database";
     }
+    
+    */
 }

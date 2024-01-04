@@ -16,6 +16,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/region/")
+@CrossOrigin(origins = "*")
 public class RegionController {
 
     @Autowired

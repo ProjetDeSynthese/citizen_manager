@@ -22,22 +22,22 @@ import java.util.List;
 public class Citoyen implements Serializable {
 
     @Id
-    private String id;
+    public String id;
 
     @NonNull
-    private String name;
-    private String prenom;
-    private String sexe;
+    public String name;
+    public String prenom;
+    public String sexe;
     @Indexed(unique = true)
-    private String email;
-    private String situationMat;
-    private String phone;
-    private String nationalite;
-    private String profession;
+    public String email;
+    public String situationMat;
+    public String phone;
+    public String nationalite;
+    public String profession;
     @NonNull
     @Indexed(unique = true)
-    private String numCni;
+    public String numCni;
 
     @DBRef
-    private List<Habitat> habitats = new ArrayList<>();
+    public List<Habitat> habitats = new ArrayList<>();
 }

@@ -9,5 +9,6 @@ public interface DepartementService {
     public List<Departement> findAll();
 
     public Departement findByCode(String code);
-    public void deleteByCode(String code);
+    public void deleteById(String id);
+    public Departement findById(String id);
 }

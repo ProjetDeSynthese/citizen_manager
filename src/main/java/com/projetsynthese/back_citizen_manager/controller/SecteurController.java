@@ -1,7 +1,13 @@
 package com.projetsynthese.back_citizen_manager.controller;
 
+import com.projetsynthese.back_citizen_manager.DTO.QuartierDTO;
+import com.projetsynthese.back_citizen_manager.DTO.SecteurDTO;
 import com.projetsynthese.back_citizen_manager.entity.*;
+import com.projetsynthese.back_citizen_manager.exeption.message.Message;
 import com.projetsynthese.back_citizen_manager.repository.*;
+import com.projetsynthese.back_citizen_manager.services.QuartierService;
+import com.projetsynthese.back_citizen_manager.services.SecteurService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,14 +16,53 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/api/secteur/")
+@CrossOrigin(origins = "*")
 public class SecteurController {
 
+
     @Autowired
-    private SecteurRepo secteurRepo;
+    private ModelMapper modelMapper;
+
     @Autowired
-    private QuartierRepo quartierRepo;
+    private SecteurService secteurService;
+
+    @PostMapping()
+    public ResponseEntity<Message> save(@RequestBody Secteur secteur){
+        if (secteur == null){
+            Message message = Message.builder()
+                    .code(500).message("Entity is required")
+                    .build();
+            return new ResponseEntity<>(message, HttpStatus.FORBIDDEN);
+        }
+        this.secteurService.create(secteur);
+        Message message = Message.builder()
+                .code(201).message("Record Successfully")
+                .build();
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+    @GetMapping()
+    public ResponseEntity<List<SecteurDTO>> findAll(){
+        return new ResponseEntity<>( this.secteurService.findAll()
+                .stream()
+                .map(secteur -> modelMapper.map(secteur,SecteurDTO.class))
+                .collect(Collectors.toList()),HttpStatus.OK );
+
+    }
+    @GetMapping("{code}")
+    public ResponseEntity<SecteurDTO> findById(@PathVariable String code){
+        return new ResponseEntity<>(
+                modelMapper.map(this.secteurService.findByCode(code),SecteurDTO.class),
+                HttpStatus.OK);
+    }
+
+   /* @Autowired
+    private SecteurRepository secteurRepo;
+    @Autowired
+    private QuartierRepository quartierRepo;
     @Autowired
     private CommuneRepository communeRepo;
     @Autowired
@@ -157,4 +202,6 @@ public class SecteurController {
         secteurRepo.deleteById(id);
         return "Deleted with Successfully from database";
     }
+
+    */
 }

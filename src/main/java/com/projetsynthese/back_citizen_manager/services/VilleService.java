@@ -10,5 +10,6 @@ public interface VilleService {
     public List<Ville> findAll();
 
     public Ville findByCode(String code);
-    public void deleteByCode(String code);
+    public void deleteById(String code);
+    public Ville findById(String id);
 }

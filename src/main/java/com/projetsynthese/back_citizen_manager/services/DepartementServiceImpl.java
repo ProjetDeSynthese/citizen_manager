@@ -1,23 +1,24 @@
 package com.projetsynthese.back_citizen_manager.services;
 
+import com.projetsynthese.back_citizen_manager.entity.Citoyen;
 import com.projetsynthese.back_citizen_manager.entity.Departement;
 import com.projetsynthese.back_citizen_manager.exeption.EntityNotFoundException;
 import com.projetsynthese.back_citizen_manager.repository.DepartementRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@NoArgsConstructor
-@AllArgsConstructor
 public class DepartementServiceImpl implements DepartementService{
+    @Autowired
     private DepartementRepository departementRepository;
 
     public void create(Departement departement) {
-        Optional<Departement> optionalDepartement = Optional.ofNullable(findByCode(departement.code));
+        //Optional<Departement> optionalDepartement = Optional.ofNullable(findByCode(departement.code));
 
         departementRepository.save(departement);
     }
@@ -34,9 +35,12 @@ public class DepartementServiceImpl implements DepartementService{
         return optionalDepartement.orElseThrow(()->new EntityNotFoundException());
 
     }
+    public Departement findById(String id) {
+        Optional<Departement> optionalDepartement = departementRepository.findById(id);
+        return optionalDepartement.orElseThrow(()->new EntityNotFoundException());
+    }
 
-    public void deleteByCode(String code){
-        Optional<Departement> optionalDepartement = Optional.ofNullable(findByCode(code));
-        //departementRepository.delete(optionalDepartement);
+    public void deleteById(String id){
+        departementRepository.deleteById(id);
     }
 }

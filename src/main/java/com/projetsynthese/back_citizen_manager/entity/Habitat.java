@@ -20,18 +20,18 @@ import java.util.List;
 public class Habitat implements Serializable {
 
     @Id
-    private String id;
+    public String id;
 
-    private String adresse;
-    private float superficie;
-    private int nombreChambre;
-    private String proprietaire;
-    private int anneeConstruct;
-    private int etage;
-    private int parking;
-    private boolean libre = false;
+    public String adresse;
+    public float superficie;
+    public int nombreChambre;
+    public String proprietaire;
+    public int anneeConstruct;
+    public int etage;
+    public int parking;
+    public boolean libre = false;
 
     @DBRef
-    private Secteur secteur;
+    public Secteur secteur;
 
 }

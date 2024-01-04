@@ -10,5 +10,6 @@ public interface RegionService {
     public List<Region> findAll();
 
     public Region findByCode(String code);
-    public void deleteByCode(String code);
+    public void deleteById(String id);
+    public Region findById(String id);
 }

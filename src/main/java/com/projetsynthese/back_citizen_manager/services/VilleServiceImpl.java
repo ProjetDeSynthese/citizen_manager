@@ -1,5 +1,6 @@
 package com.projetsynthese.back_citizen_manager.services;
 
+import com.projetsynthese.back_citizen_manager.entity.Citoyen;
 import com.projetsynthese.back_citizen_manager.entity.Region;
 import com.projetsynthese.back_citizen_manager.entity.Ville;
 import com.projetsynthese.back_citizen_manager.exeption.EntityNotFoundException;
@@ -7,20 +8,20 @@ import com.projetsynthese.back_citizen_manager.repository.RegionRepository;
 import com.projetsynthese.back_citizen_manager.repository.VilleRepository;
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
-@NoArgsConstructor
-@AllArgsConstructor
+
 @Service
 public class VilleServiceImpl implements  VilleService{
-
+    @Autowired
     private VilleRepository villeRepository;
 
     public void create(Ville ville) {
-        Optional<Ville> optionalVille = Optional.ofNullable(findByCode(ville.code));
+       // Optional<Ville> optionalVille = Optional.ofNullable(findByCode(ville.code));
 
         villeRepository.save(ville);
     }
@@ -37,9 +38,12 @@ public class VilleServiceImpl implements  VilleService{
         return optionalVille.orElseThrow(()->new EntityNotFoundException());
 
     }
+    public Ville findById(String id) {
+        Optional<Ville> optionalVille = villeRepository.findById(id);
+        return optionalVille.orElseThrow(()->new EntityNotFoundException());
+    }
 
-    public void deleteByCode(String code){
-        Optional<Ville> optionalVille = Optional.ofNullable(findByCode(code));
-        //villeRepository.delete(optionalVille);
+    public void deleteById(String id){
+        villeRepository.deleteById(id);
     }
 }

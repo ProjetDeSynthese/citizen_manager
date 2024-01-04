@@ -10,5 +10,6 @@ public interface CommuneService {
     public List<Commune> findAll();
 
     public Commune findByCode(String code);
-    public void deleteByCode(String code);
+    public void deleteById(String id);
+    public Commune findById(String id);
 }

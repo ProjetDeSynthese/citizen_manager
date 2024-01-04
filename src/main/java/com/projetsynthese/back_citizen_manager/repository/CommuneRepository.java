@@ -5,7 +5,7 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.Optional;
 
-public interface CommuneRepository extends MongoRepository<Commune, Long> {
+public interface CommuneRepository extends MongoRepository<Commune, String> {
     public Optional<Commune> findByName(String name);
 
     Optional<Commune> findByCode(String code);

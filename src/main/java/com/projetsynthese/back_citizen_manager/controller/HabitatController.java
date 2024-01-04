@@ -1,7 +1,13 @@
 package com.projetsynthese.back_citizen_manager.controller;
 
+import com.projetsynthese.back_citizen_manager.DTO.DepartementDTO;
+import com.projetsynthese.back_citizen_manager.DTO.HabitatDTO;
 import com.projetsynthese.back_citizen_manager.entity.*;
+import com.projetsynthese.back_citizen_manager.exeption.message.Message;
 import com.projetsynthese.back_citizen_manager.repository.*;
+import com.projetsynthese.back_citizen_manager.services.DepartementService;
+import com.projetsynthese.back_citizen_manager.services.HabitatService;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,26 +16,64 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/api/habitat/")
+@CrossOrigin(origins = "*")
 public class HabitatController {
 
+    @Autowired
+    private ModelMapper modelMapper;
+
+    @Autowired
+    private HabitatService habitatService;
+
+    @PostMapping()
+    public ResponseEntity<Message> save(@RequestBody Habitat habitat){
+        if (habitat == null){
+            Message message = Message.builder()
+                    .code(500).message("Entity is required")
+                    .build();
+            return new ResponseEntity<>(message, HttpStatus.FORBIDDEN);
+        }
+        this.habitatService.create(habitat);
+        Message message = Message.builder()
+                .code(201).message("Record Successfully")
+                .build();
+        return new ResponseEntity<>(message, HttpStatus.OK);
+    }
+    @GetMapping()
+    public ResponseEntity<List<HabitatDTO>> findAll(){
+        return new ResponseEntity<>( this.habitatService.findAll()
+                .stream()
+                .map(habitat -> modelMapper.map(habitat,HabitatDTO.class))
+                .collect(Collectors.toList()),HttpStatus.OK );
+
+    }
+    @GetMapping("{address}")
+    public ResponseEntity<HabitatDTO> findById(@PathVariable String addresse){
+        return new ResponseEntity<>(
+                modelMapper.map(this.habitatService.findByAddress(addresse),HabitatDTO.class),
+                HttpStatus.OK);
+    }
+/*
     @Autowired
     private CitoyenRepo citoyenRepo;
     @Autowired
     private RegionRepository regionRepo;
     @Autowired
-    private SecteurRepo secteurRepo;
+    private SecteurRepository secteurRepo;
     @Autowired
     private DepartementRepository departementRepo;
     @Autowired
     private VilleRepository villeRepo;
     @Autowired
-    private QuartierRepo quartierRepo;
+    private QuartierRepository quartierRepo;
     @Autowired
     private CommuneRepository communeRepo;
     @Autowired
-    private HabitatRepo habitatRepo;
+    private HabitatRepository habitatRepo;
 
     //Ajouter un habitat
     @PostMapping("/addHabitat")
@@ -469,4 +513,6 @@ public class HabitatController {
         habitatRepo.deleteById(id);
         return "Deleted with Successfully from database";
     }
+
+ */
 }

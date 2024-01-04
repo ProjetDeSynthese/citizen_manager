@@ -15,6 +15,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/api/ville/")
+@CrossOrigin(origins = "*")
 public class VilleController {
     @Autowired
     private ModelMapper modelMapper;

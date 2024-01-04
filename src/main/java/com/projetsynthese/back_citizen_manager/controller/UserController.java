@@ -1,8 +1,7 @@
 package com.projetsynthese.back_citizen_manager.controller;
 
 import com.projetsynthese.back_citizen_manager.entity.User;
-import com.projetsynthese.back_citizen_manager.repository.UserRepo;
-import jakarta.websocket.server.PathParam;
+import com.projetsynthese.back_citizen_manager.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,9 +11,9 @@ import java.util.List;
 
 @RestController
 public class UserController {
-
+/*
     @Autowired
-    private UserRepo userRepo;
+    private UserRepository userRepo;
 
     //Ajouter un utilisateur
     @PostMapping("/addUser")
@@ -78,5 +77,5 @@ public class UserController {
     public String deleteUser(@PathVariable String id){
         userRepo.deleteById(id);
         return "Deleted with Successfully from database";
-    }
+    }*/
 }
