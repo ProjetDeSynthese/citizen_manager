@@ -56,10 +56,24 @@ public class CommuneController {
                 .collect(Collectors.toList()),HttpStatus.OK );
 
     }
-    @GetMapping("{code}")
-    public ResponseEntity<CommuneDTO> findById(@PathVariable String code){
+    @GetMapping("{id}")
+    public ResponseEntity<CommuneDTO> findById(@PathVariable String id){
         return new ResponseEntity<>(
-                modelMapper.map(this.communeService.findByCode(code),CommuneDTO.class),
+                modelMapper.map(this.communeService.findById(id),CommuneDTO.class),
                 HttpStatus.OK);
+    }
+    @DeleteMapping("{id}")
+    public ResponseEntity<Message>  deleteById(@PathVariable String id){
+        try{
+            this.communeService.deleteById(id);
+            Message message = Message.builder().message("Successfully").code(201).build();
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        }
+        catch (Exception e){
+            Message message = Message.builder().message("Error").code(500).build();
+            return new ResponseEntity<>(message, HttpStatus.FORBIDDEN);
+
+        }
+
     }
 }

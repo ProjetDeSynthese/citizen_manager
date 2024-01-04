@@ -47,12 +47,27 @@ public class RegionController {
                 .collect(Collectors.toList()),HttpStatus.OK );
 
     }
-    @GetMapping("{code}")
-    public ResponseEntity<RegionDTO> findById(@PathVariable String code){
+    @GetMapping("{id}")
+    public ResponseEntity<RegionDTO> findById(@PathVariable String id){
         return new ResponseEntity<>(
-                modelMapper.map(this.regionService.findByCode(code),RegionDTO.class),
+                modelMapper.map(this.regionService.findById(id),RegionDTO.class),
                 HttpStatus.OK);
     }
+    @DeleteMapping("{id}")
+    public ResponseEntity<Message>  deleteById(@PathVariable String id){
+        try{
+            this.regionService.deleteById(id);
+            Message message = Message.builder().message("Successfully").code(201).build();
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        }
+        catch (Exception e){
+            Message message = Message.builder().message("Error").code(500).build();
+            return new ResponseEntity<>(message, HttpStatus.FORBIDDEN);
+
+        }
+
+    }
+
 
     /*@PutMapping("/updateRegion/{id}")
     public ResponseEntity<Region> editRegion(@PathVariable("id") String id, @RequestBody Region region){

@@ -47,10 +47,24 @@ public class DepartementController {
                 .collect(Collectors.toList()),HttpStatus.OK );
 
     }
-    @GetMapping("{code}")
-    public ResponseEntity<DepartementDTO> findById(@PathVariable String code){
+    @GetMapping("{id}")
+    public ResponseEntity<DepartementDTO> findById(@PathVariable String id){
         return new ResponseEntity<>(
-                modelMapper.map(this.departementService.findByCode(code),DepartementDTO.class),
+                modelMapper.map(this.departementService.findById(id),DepartementDTO.class),
                 HttpStatus.OK);
+    }
+    @DeleteMapping("{id}")
+    public ResponseEntity<Message>  deleteById(@PathVariable String id){
+        try{
+            Message message = Message.builder().message("Successfully").code(201).build();
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        }
+        catch (Exception e){
+            this.departementService.deleteById(id);
+            Message message = Message.builder().message("Error").code(500).build();
+            return new ResponseEntity<>(message, HttpStatus.FORBIDDEN);
+
+        }
+
     }
 }

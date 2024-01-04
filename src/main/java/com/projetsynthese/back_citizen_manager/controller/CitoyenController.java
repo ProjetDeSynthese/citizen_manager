@@ -56,7 +56,20 @@ public class CitoyenController {
                 modelMapper.map(this.citoyenService.findByCni(cni),CitoyenDTO.class),
                 HttpStatus.OK);
     }
+    @DeleteMapping("{id}")
+    public ResponseEntity<Message>  deleteById(@PathVariable String id){
+        try{
+            this.citoyenService.deleteById(id);
+            Message message = Message.builder().message("Successfully").code(201).build();
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        }
+        catch (Exception e){
+            Message message = Message.builder().message("Error").code(500).build();
+            return new ResponseEntity<>(message, HttpStatus.FORBIDDEN);
 
+        }
+
+    }
    /* @Autowired
     private CitoyenRepository citoyenRepo;
     @Autowired

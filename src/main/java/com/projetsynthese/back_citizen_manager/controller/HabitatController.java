@@ -57,6 +57,20 @@ public class HabitatController {
                 modelMapper.map(this.habitatService.findByAddress(addresse),HabitatDTO.class),
                 HttpStatus.OK);
     }
+    @DeleteMapping("{id}")
+    public ResponseEntity<Message>  deleteById(@PathVariable String id){
+        try{
+            this.habitatService.deleteById(id);
+            Message message = Message.builder().message("Successfully").code(201).build();
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        }
+        catch (Exception e){
+            Message message = Message.builder().message("Error").code(500).build();
+            return new ResponseEntity<>(message, HttpStatus.FORBIDDEN);
+
+        }
+
+    }
 /*
     @Autowired
     private CitoyenRepo citoyenRepo;

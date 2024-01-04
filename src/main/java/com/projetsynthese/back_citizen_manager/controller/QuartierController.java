@@ -51,11 +51,25 @@ public class QuartierController {
                 .collect(Collectors.toList()),HttpStatus.OK );
 
     }
-    @GetMapping("{code}")
-    public ResponseEntity<QuartierDTO> findById(@PathVariable String code){
+    @GetMapping("{id}")
+    public ResponseEntity<QuartierDTO> findById(@PathVariable String id){
         return new ResponseEntity<>(
-                modelMapper.map(this.quartierService.findByCode(code),QuartierDTO.class),
+                modelMapper.map(this.quartierService.findByCode(id),QuartierDTO.class),
                 HttpStatus.OK);
+    }
+    @DeleteMapping("{id}")
+    public ResponseEntity<Message>  deleteById(@PathVariable String id){
+        try{
+            this.quartierService.deleteById(id);
+            Message message = Message.builder().message("Successfully").code(201).build();
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        }
+        catch (Exception e){
+            Message message = Message.builder().message("Error").code(500).build();
+            return new ResponseEntity<>(message, HttpStatus.FORBIDDEN);
+
+        }
+
     }
 
     /*@Autowired

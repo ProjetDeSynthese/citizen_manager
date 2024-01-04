@@ -45,10 +45,24 @@ public class VilleController {
                 .collect(Collectors.toList()),HttpStatus.OK );
 
     }
-    @GetMapping("{code}")
-    public ResponseEntity<VilleDTO> findById(@PathVariable String code){
+    @GetMapping("{id}")
+    public ResponseEntity<VilleDTO> findById(@PathVariable String id){
         return new ResponseEntity<>(
-                modelMapper.map(this.villeService.findByCode(code),VilleDTO.class),
+                modelMapper.map(this.villeService.findById(id),VilleDTO.class),
                 HttpStatus.OK);
+    }
+    @DeleteMapping("{id}")
+    public ResponseEntity<Message>  deleteById(@PathVariable String id){
+        try{
+            this.villeService.deleteById(id);
+           Message message = Message.builder().message("Successfully").code(201).build();
+            return new ResponseEntity<>(message, HttpStatus.OK);
+        }
+        catch (Exception e){
+            Message message = Message.builder().message("Error").code(500).build();
+            return new ResponseEntity<>(message, HttpStatus.FORBIDDEN);
+
+        }
+
     }
 }
