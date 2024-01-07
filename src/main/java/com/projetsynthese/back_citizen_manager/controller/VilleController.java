@@ -1,5 +1,6 @@
 package com.projetsynthese.back_citizen_manager.controller;
 
+import com.projetsynthese.back_citizen_manager.DTO.DepartementDTO;
 import com.projetsynthese.back_citizen_manager.DTO.VilleDTO;
 import com.projetsynthese.back_citizen_manager.entity.*;
 import com.projetsynthese.back_citizen_manager.exeption.message.Message;
@@ -71,5 +72,13 @@ public class VilleController {
 
         }
 
+    }
+
+    @GetMapping("findByDepartement/{departement}")
+    public ResponseEntity<List<VilleDTO>> findByDepartement(@PathVariable String departement){
+        return new ResponseEntity<>( this.villeService.findByDepartement(departement)
+                .stream()
+                .map(ville -> modelMapper.map(ville,VilleDTO.class))
+                .collect(Collectors.toList()),HttpStatus.OK );
     }
 }

@@ -82,4 +82,12 @@ public class CommuneController {
         }
 
     }
+
+    @GetMapping("findByVille/{ville}")
+    public ResponseEntity<List<CommuneDTO>> findByVille(@PathVariable String ville){
+        return new ResponseEntity<>( this.communeService.findByVille(ville)
+                .stream()
+                .map(commune -> modelMapper.map(commune,CommuneDTO.class))
+                .collect(Collectors.toList()),HttpStatus.OK );
+    }
 }

@@ -9,6 +9,7 @@ public interface SecteurService {
 
     public void create(Secteur secteur);
     public List<Secteur> findAll();
+    public List<Secteur> findByQuartier(String quartier_id);
 
     public Secteur findByCode(String code);
     public void deleteById(String code);

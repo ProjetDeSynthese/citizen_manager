@@ -8,6 +8,7 @@ import java.util.List;
 public interface VilleService {
     public void create(Ville ville);
     public List<Ville> findAll();
+    public List<Ville> findByDepartement(String departement_id);
 
     public Ville findByCode(String code);
     public void deleteById(String code);

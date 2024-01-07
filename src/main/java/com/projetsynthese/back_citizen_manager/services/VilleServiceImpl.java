@@ -1,6 +1,7 @@
 package com.projetsynthese.back_citizen_manager.services;
 
 import com.projetsynthese.back_citizen_manager.entity.Citoyen;
+import com.projetsynthese.back_citizen_manager.entity.Departement;
 import com.projetsynthese.back_citizen_manager.entity.Region;
 import com.projetsynthese.back_citizen_manager.entity.Ville;
 import com.projetsynthese.back_citizen_manager.exeption.EntityNotFoundException;
@@ -19,6 +20,8 @@ import java.util.Optional;
 public class VilleServiceImpl implements  VilleService{
     @Autowired
     private VilleRepository villeRepository;
+    @Autowired
+    private  DepartementService departementService;
 
     public void create(Ville ville) {
        // Optional<Ville> optionalVille = Optional.ofNullable(findByCode(ville.code));
@@ -28,6 +31,14 @@ public class VilleServiceImpl implements  VilleService{
 
     public List<Ville> findAll() {
         Optional<List<Ville>> optionalVilles = Optional.of(this.villeRepository.findAll());
+        return optionalVilles.orElseThrow(
+                ()-> new EntityNotFoundException("Not Found")
+        );
+    }
+
+    public List<Ville> findByDepartement(String departement_id) {
+        Departement departement = this.departementService.findById(departement_id);
+        Optional<List<Ville>> optionalVilles = Optional.of(this.villeRepository.findByDepartement(departement));
         return optionalVilles.orElseThrow(
                 ()-> new EntityNotFoundException("Not Found")
         );

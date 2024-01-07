@@ -1,6 +1,7 @@
 package com.projetsynthese.back_citizen_manager.services;
 
 import com.projetsynthese.back_citizen_manager.entity.Citoyen;
+import com.projetsynthese.back_citizen_manager.entity.Commune;
 import com.projetsynthese.back_citizen_manager.entity.Quartier;
 import com.projetsynthese.back_citizen_manager.exeption.EntityNotFoundException;
 import com.projetsynthese.back_citizen_manager.repository.QuartierRepository;
@@ -16,7 +17,8 @@ import java.util.Optional;
 public class QuartierServiceImpl implements QuartierService {
     @Autowired
     private QuartierRepository quartierRepository;
-
+    @Autowired
+    private  CommuneService communeService;
     public void create(Quartier quartier) {
        // Optional<Quartier> optionalQuartier = Optional.ofNullable(findByCode(quartier.code));
 
@@ -39,9 +41,15 @@ public class QuartierServiceImpl implements QuartierService {
         Optional<Quartier> optionalQuartier = quartierRepository.findById(id);
         return optionalQuartier.orElseThrow(()->new EntityNotFoundException());
     }
-
-
     public void deleteById(String id){
         quartierRepository.deleteById(id);
+    }
+
+    public List<Quartier> findByCommune(String commune_id) {
+        Commune commune = this.communeService.findById(commune_id);
+        Optional<List<Quartier>> optionalQuartiers = Optional.of(this.quartierRepository.findByCommune(commune));
+        return optionalQuartiers.orElseThrow(
+                ()-> new EntityNotFoundException("Not Found")
+        );
     }
 }
