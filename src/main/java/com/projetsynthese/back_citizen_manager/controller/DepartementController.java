@@ -73,4 +73,12 @@ public class DepartementController {
         }
 
     }
+
+    @GetMapping("findByRegion/{region}")
+    public ResponseEntity<List<DepartementDTO>> findByRegion(@PathVariable String region){
+        return new ResponseEntity<>( this.departementService.findByRegion(region)
+                .stream()
+                .map(departement -> modelMapper.map(departement,DepartementDTO.class))
+                .collect(Collectors.toList()),HttpStatus.OK );
+    }
 }

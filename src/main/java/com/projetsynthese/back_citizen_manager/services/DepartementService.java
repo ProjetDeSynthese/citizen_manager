@@ -11,4 +11,7 @@ public interface DepartementService {
     public Departement findByCode(String code);
     public void deleteById(String id);
     public Departement findById(String id);
+
+
+    public List<Departement> findByRegion(String region_id);
 }
