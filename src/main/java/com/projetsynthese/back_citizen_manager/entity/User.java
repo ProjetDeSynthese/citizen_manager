@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,23 +22,20 @@ import java.util.Collections;
 public class User implements Serializable ,UserDetails{
 
     @Id
-    private String id;
+    public String id;
 
-    private String name;
-    private String prenom;
+    public String nom_prenom;
     @Indexed(unique = true)
-    private String email;
-    private String numero;
-    private String username;
-    private String password;
-    //private ERole role;
-    private Boolean isActive = true;
-    private Boolean status = false;
+    public String email;
+    public String username;
+    public String password;
+    public String role;
+    private String status ;
 
-    public  Role role;
+   // public  Role role;
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Collections.singletonList(new SimpleGrantedAuthority("ROL"+ this.role.getLabel()));
+        return Collections.singletonList(new SimpleGrantedAuthority("ROLE_"+ this.getRole()));
     }
 
     @Override
@@ -52,22 +50,22 @@ public class User implements Serializable ,UserDetails{
 
     @Override
     public boolean isAccountNonExpired() {
-        return this.isActive;
+        return true;
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return this.isActive;
+        return true;
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return this.isActive;
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return this.isActive;
+        return true;
     }
 
 

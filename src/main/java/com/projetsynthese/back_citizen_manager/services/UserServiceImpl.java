@@ -1,12 +1,14 @@
 package com.projetsynthese.back_citizen_manager.services;
 
 import com.projetsynthese.back_citizen_manager.entity.User;
+import com.projetsynthese.back_citizen_manager.exeption.EntityNotFoundException;
 import com.projetsynthese.back_citizen_manager.repository.UserRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -29,10 +31,15 @@ public class UserServiceImpl  implements  UserService {
             throw  new RuntimeException("Your email is already used");
         }
        user.setPassword(this.passwordEncoder.encode(user.getPassword()));
-      //  Role userRole = new Role();
-        //userRole.setLabel(RoleEnum.ADMINISTRATOR);
-        //user.setRole(userRole);
-       // this.userRepository.save(user);
+
+        this.userRepository.save(user);
+
+    }
+
+    @Override
+    public List<User> findAll() {
+        Optional<List<User>> optionalUsers = Optional.of(this.userRepository.findAll());
+        return optionalUsers.orElseThrow(()-> new EntityNotFoundException("Not founds users"));
 
     }
 
