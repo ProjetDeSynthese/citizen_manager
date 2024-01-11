@@ -10,6 +10,6 @@ import java.util.Optional;
 @RepositoryRestResource
 public interface HabitatRepository extends MongoRepository<Habitat, String> {
 
-    public List<Habitat> findByAdresse(String adresse);
+    //public List<Habitat> findByAdresse(String adresse);
     public Optional<Habitat> findByProprietaire(String pro);
 }

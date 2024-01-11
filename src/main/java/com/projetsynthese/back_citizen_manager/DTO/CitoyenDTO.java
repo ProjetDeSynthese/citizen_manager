@@ -20,5 +20,6 @@ public class CitoyenDTO {
     public String nationalite;
     public String profession;
     public String numCni;
+
     public List<Habitat> habitats = new ArrayList<>();
 }

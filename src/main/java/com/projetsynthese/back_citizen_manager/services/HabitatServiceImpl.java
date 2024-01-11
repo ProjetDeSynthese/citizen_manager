@@ -29,11 +29,11 @@ public class HabitatServiceImpl implements HabitatService {
         );
     }
 
-    public Habitat findByAddress(String address) {
+   /* public Habitat findByAddress(String address) {
         List<Habitat> optionalHabitat = habitatRepository.findByAdresse(address);
         return (Habitat) optionalHabitat;
 
-    }
+    }*/
     public Habitat findById(String id) {
         Optional<Habitat> optionalHabitat = habitatRepository.findById(id);
         return optionalHabitat.orElseThrow(()->new EntityNotFoundException());

@@ -14,9 +14,10 @@ public class HabitatDTO {
     public String id;
     public String description;
     public String proprietaire;
-    public String adresse;
+    //public String adresse;
     public Double latitude;
     public Double longitude;
+    public Double prix;
     public List<String> images;
     public Secteur secteur;
     public TypeHabitat typeHabitat;

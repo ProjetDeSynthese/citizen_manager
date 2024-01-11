@@ -9,7 +9,7 @@ public interface HabitatService {
     public void create(Habitat habitat);
     public List<Habitat> findAll();
 
-    public Habitat findByAddress(String address);
+   // public Habitat findByAddress(String address);
     public void deleteById(String code);
     public Habitat findById(String id);
 }

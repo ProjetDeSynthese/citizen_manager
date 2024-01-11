@@ -26,7 +26,8 @@ public class Habitat implements Serializable {
     public String proprietaire;
     public Double latitude;
     public Double longitude;
-    public String adresse;
+   // public String adresse;
+    public Double prix;
     public List<String> images;
     @DBRef
     public Secteur secteur;

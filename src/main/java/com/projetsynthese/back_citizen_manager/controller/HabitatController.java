@@ -57,12 +57,12 @@ public class HabitatController {
                 modelMapper.map(this.habitatService.findById(id),HabitatDTO.class),
                 HttpStatus.OK);
     }
-    @GetMapping("findByAddress/{address}")
+  /*  @GetMapping("findByAddress/{address}")
     public ResponseEntity<HabitatDTO> findByAddress(@PathVariable String address){
         return new ResponseEntity<>(
                 modelMapper.map(this.habitatService.findByAddress(address),HabitatDTO.class),
                 HttpStatus.OK);
-    }
+    }*/
     @DeleteMapping("{id}")
     public ResponseEntity<Message>  deleteById(@PathVariable String id){
         try{
