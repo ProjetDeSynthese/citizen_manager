@@ -26,7 +26,7 @@ public class UserServiceImpl  implements  UserService {
         if ( !user.getEmail().contains(".") ) {
            throw  new RuntimeException("Email non match");
         }
-        Optional<Object> userOptional = this.userRepository.findByEmail(user.getEmail());
+        Optional<User> userOptional = this.userRepository.findByEmail(user.getEmail());
         if(userOptional.isPresent()){
             throw  new RuntimeException("Your email is already used");
         }

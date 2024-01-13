@@ -19,6 +19,7 @@ public class UserDTO {
     public String password;
     public ERole role;
     public Status status ;
+    public String roleTem;
 }
 
 

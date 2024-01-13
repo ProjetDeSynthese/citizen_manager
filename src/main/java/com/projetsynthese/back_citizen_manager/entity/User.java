@@ -30,6 +30,7 @@ public class User implements Serializable ,UserDetails{
     public String username;
     public String password;
     public String role;
+    public String roleTem;
     private String status ;
 
    // public  Role role;
