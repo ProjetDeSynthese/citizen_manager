@@ -1,0 +1,37 @@
+package com.projetsynthese.back_citizen_manager.services;
+
+import com.projetsynthese.back_citizen_manager.entity.TypeMaison;
+import com.projetsynthese.back_citizen_manager.exeption.EntityNotFoundException;
+import com.projetsynthese.back_citizen_manager.repository.TypeMaisonRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+ @Service
+public class TypeMaisonServiceImpl implements TypeMaisonService {
+    @Autowired
+    private TypeMaisonRepository typeHabibatRepository;
+
+    public void create(TypeMaison typeHabitat) {
+
+        typeHabibatRepository.save(typeHabitat);
+    }
+
+    public List<TypeMaison> findAll() {
+        Optional<List<TypeMaison>> optionalTypeHabitats = Optional.of(this.typeHabibatRepository.findAll());
+        return optionalTypeHabitats.orElseThrow(
+                ()-> new EntityNotFoundException("Not Found")
+        );
+    }
+
+
+    public TypeMaison findById(String id) {
+        Optional<TypeMaison> optionalTypeHabitat = typeHabibatRepository.findById(id);
+        return optionalTypeHabitat.orElseThrow(()->new EntityNotFoundException());
+    }
+
+    public void deleteById(String id){
+        typeHabibatRepository.deleteById(id);
+    }
+}

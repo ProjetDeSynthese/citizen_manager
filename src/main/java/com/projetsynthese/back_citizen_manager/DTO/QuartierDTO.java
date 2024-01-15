@@ -12,7 +12,5 @@ public class QuartierDTO {
     public String id;
 
     public String name;
-    public String code;
-
     public Commune commune;
 }

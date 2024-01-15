@@ -32,11 +32,6 @@ public class QuartierServiceImpl implements QuartierService {
         );
     }
 
-    public Quartier findByCode(String code) {
-        Optional<Quartier> optionalQuartier = quartierRepository.findByCode(code);
-        return optionalQuartier.orElseThrow(()->new EntityNotFoundException());
-
-    }
     public Quartier findById(String id) {
         Optional<Quartier> optionalQuartier = quartierRepository.findById(id);
         return optionalQuartier.orElseThrow(()->new EntityNotFoundException());

@@ -5,7 +5,10 @@ import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
-public class TypeHabitatDTO {
+public class ProprietaireDTO {
     public String id;
-    public String name;
+    public String nom;
+    public String prenom;
+    public String email;
+    public String contact;
 }

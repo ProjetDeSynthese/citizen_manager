@@ -23,8 +23,6 @@ public class Quartier implements Serializable {
     @NonNull
     @Indexed(unique = true)
     public String name;
-    public String code;
-
     @DBRef
     public Commune commune;
 }

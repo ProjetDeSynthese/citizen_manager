@@ -1,6 +1,6 @@
 package com.projetsynthese.back_citizen_manager.DTO;
 
-import com.projetsynthese.back_citizen_manager.entity.Habitat;
+import com.projetsynthese.back_citizen_manager.entity.Maison;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -21,5 +21,5 @@ public class CitoyenDTO {
     public String profession;
     public String numCni;
 
-    public List<Habitat> habitats = new ArrayList<>();
+    public List<Maison> habitats = new ArrayList<>();
 }

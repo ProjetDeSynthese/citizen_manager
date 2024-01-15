@@ -8,8 +8,6 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.DocumentReference;
-import org.springframework.data.mongodb.core.mapping.MongoId;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -39,5 +37,5 @@ public class Citoyen implements Serializable {
     public String numCni;
 
     @DBRef
-    public List<Habitat> habitats = new ArrayList<>();
+    public List<Maison> habitats = new ArrayList<>();
 }

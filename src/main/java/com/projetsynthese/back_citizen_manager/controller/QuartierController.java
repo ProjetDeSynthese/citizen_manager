@@ -1,7 +1,5 @@
 package com.projetsynthese.back_citizen_manager.controller;
 
-import com.projetsynthese.back_citizen_manager.DTO.DepartementDTO;
-import com.projetsynthese.back_citizen_manager.DTO.HabitatDTO;
 import com.projetsynthese.back_citizen_manager.DTO.QuartierDTO;
 import com.projetsynthese.back_citizen_manager.entity.*;
 import com.projetsynthese.back_citizen_manager.exeption.message.Message;
@@ -52,12 +50,6 @@ public class QuartierController {
     public ResponseEntity<QuartierDTO> findById(@PathVariable String id){
         return new ResponseEntity<>(
                 modelMapper.map(this.quartierService.findById(id),QuartierDTO.class),
-                HttpStatus.OK);
-    }
-    @GetMapping("findByCode/{code}")
-    public ResponseEntity<QuartierDTO> findByCode(@PathVariable String code){
-        return new ResponseEntity<>(
-                modelMapper.map(this.quartierService.findByCode(code),QuartierDTO.class),
                 HttpStatus.OK);
     }
 

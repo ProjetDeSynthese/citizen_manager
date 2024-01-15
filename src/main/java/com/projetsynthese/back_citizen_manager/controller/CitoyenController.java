@@ -1,21 +1,16 @@
 package com.projetsynthese.back_citizen_manager.controller;
 
 import com.projetsynthese.back_citizen_manager.DTO.CitoyenDTO;
-import com.projetsynthese.back_citizen_manager.DTO.DepartementDTO;
 import com.projetsynthese.back_citizen_manager.entity.*;
 import com.projetsynthese.back_citizen_manager.exeption.message.Message;
-import com.projetsynthese.back_citizen_manager.repository.*;
 import com.projetsynthese.back_citizen_manager.services.CitoyenService;
-import com.projetsynthese.back_citizen_manager.services.DepartementService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @RestController

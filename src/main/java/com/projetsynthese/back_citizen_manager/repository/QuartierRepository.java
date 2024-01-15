@@ -10,7 +10,6 @@ import java.util.Optional;
 public interface QuartierRepository extends MongoRepository<Quartier, String> {
     public Optional<Quartier> findByName(String name);
 
-    Optional<Quartier> findByCode(String code);
     Optional<Quartier> findById(String id);
 
     public List<Quartier> findByCommune(Commune commune);
