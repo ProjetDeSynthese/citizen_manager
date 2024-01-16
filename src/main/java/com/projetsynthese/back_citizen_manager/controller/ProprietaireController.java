@@ -38,6 +38,7 @@ public class ProprietaireController {
                 .build();
         return new ResponseEntity<>(message, HttpStatus.OK);
     }
+    
     @GetMapping()
     public ResponseEntity<List<ProprietaireDTO>> findAll(){
         return new ResponseEntity<>( this.proprietaireService.findAll()
