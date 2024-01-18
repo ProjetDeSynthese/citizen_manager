@@ -1,5 +1,6 @@
 package com.projetsynthese.back_citizen_manager.DTO;
 
+import com.projetsynthese.back_citizen_manager.entity.Commune;
 import com.projetsynthese.back_citizen_manager.entity.ERole;
 import com.projetsynthese.back_citizen_manager.entity.Status;
 import lombok.Data;
@@ -20,6 +21,7 @@ public class UserDTO {
     public ERole role;
     public Status status ;
     public String roleTem;
+    public Commune commune;
 }
 
 
